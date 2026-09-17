@@ -36,11 +36,11 @@ Megascans is installed as a Houdini Package.
 
 ## About this Repository
 
-| Directory | Description                                                                                                              |
-|-----------|--------------------------------------------------------------------------------------------------------------------------|
-| `src/`    | Houdini package definition and plugin files. During the release action they get packaged in the `megascans.zip` archive. |
-| `quixel/` | The source code for the Bridge server and USD import logic.                                                              |
-| `build/`  | Build directory used to generate the release package.                                                                    |
+| Directory    | Description                                                                                                              |
+|--------------|--------------------------------------------------------------------------------------------------------------------------|
+| `src/`       | Houdini package definition and plugin files. During the release action they get packaged in the `megascans.zip` archive. |
+| `megascans/` | The source code for the Bridge server and USD import logic.                                                              |
+| `build/`     | Build directory used to generate the release package.                                                                    |
 
 ## License
 

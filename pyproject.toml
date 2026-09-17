@@ -9,6 +9,15 @@ dependencies = [
     "houdini-component-builder@git+https://github.com/beatreichenbach/houdini-component-builder@v0.1.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "PySide2>=5.15",
+    "python-semantic-release>=10.0",
+    "ruff>=0.16",
+    "types-houdini>=21.0",
+    "types-usd>=24.5",
+]
+
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
@@ -16,13 +25,14 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
 include = ["megascans*"]
 
-[dependency-groups]
-dev = [
-    "types-houdini>=21.0",
-    "types-usd>=24.5",
-    "ruff>=0.16",
-    "PySide2>=5.15",
-]
+[tool.semantic_release]
+version_variables = ["megascans/__init__.py:__version__"]
+version_toml  = ["pyproject.toml:project.version"]
+build_command = """bash build.sh"""
+assets = ["build/megascans-*.zip"]
+
+[tool.semantic_release.remote]
+ignore_token_for_push = true
 
 [tool.ruff.format]
 quote-style = "single"
