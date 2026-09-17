@@ -42,6 +42,12 @@ Megascans is installed as a Houdini Package.
 | `megascans/` | The source code for the Bridge server and USD import logic.                                                              |
 | `build/`     | Build directory used to generate the release package.                                                                    |
 
+### Localize qt-material-icons
+
+```shell
+qtmaterialicons -o megascans --styles outlined --sizes 20 --names check_circle circle
+```
+
 ## License
 
 Copyright (c) 2026 Beat Reichenbach. This project is licensed under the [GPLv3 License](LICENSE).
