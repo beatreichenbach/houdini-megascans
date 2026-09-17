@@ -1,0 +1,29 @@
+[project]
+name = "houdini-megascans"
+version = "0.1.0"
+description = "A Quixel Bridge plugin for SideFX Houdini Solaris to import Megascans assets directly into the stage."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "qt-logging>=0.1,<1",
+    "qt-material-icons>=0.2,<1",
+    "houdini-component-builder@git+https://github.com/beatreichenbach/houdini-component-builder",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["megascans"]
+
+[dependency-groups]
+dev = [
+    "types-houdini>=21.0",
+    "types-usd>=24.5",
+    "ruff>=0.16",
+    "PySide2>=5.15",
+]
+
+[tool.ruff.format]
+quote-style = "single"

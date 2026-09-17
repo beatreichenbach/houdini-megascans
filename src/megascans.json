@@ -1,0 +1,13 @@
+{
+  "env": [
+    {
+      "HOUDINI_MEGASCANS": "$HOUDINI_PACKAGE_PATH/megascans"
+    },
+    {
+      "HOUDINI_MENU_PATH": "$HOUDINI_MEGASCANS/menu"
+    },
+    {
+      "PYTHONPATH": "$HOUDINI_MEGASCANS/python"
+    }
+  ]
+}
