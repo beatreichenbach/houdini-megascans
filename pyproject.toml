@@ -5,7 +5,6 @@ description = "A Quixel Bridge plugin for SideFX Houdini Solaris to import Megas
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "qt-logging>=0.1,<1",
     "qt-material-icons>=0.2,<1",
     "houdini-component-builder@git+https://github.com/beatreichenbach/houdini-component-builder",
 ]
