@@ -26,13 +26,13 @@ build-backend = "setuptools.build_meta"
 include = ["megascans*"]
 
 [tool.semantic_release]
-version_variables = ["megascans/__init__.py:__version__"]
 version_toml  = ["pyproject.toml:project.version"]
-build_command = """bash build.sh"""
-assets = ["build/megascans-*.zip"]
 
 [tool.semantic_release.remote]
 ignore_token_for_push = true
+
+[tool.semantic_release.github]
+upload_to_release = false
 
 [tool.ruff.format]
 quote-style = "single"
