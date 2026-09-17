@@ -2,10 +2,10 @@
 <mainMenu>
   <menuBar>
     <subMenu id="bridge">
-      <label>Bridge</label>
+      <label>Megascans</label>
 
       <scriptItem>
-        <label>Megascans</label>
+        <label>Bridge</label>
         <scriptPath>$HOUDINI_MEGASCANS/menu/open.py</scriptPath>
       </scriptItem>
 

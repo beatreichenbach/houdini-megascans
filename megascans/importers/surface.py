@@ -3,8 +3,7 @@ import logging
 import hou
 from component_builder import ComponentBuilder
 
-from .. import base, utils
-from . import common
+from . import base, common
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +20,7 @@ class SurfaceImporter(base.Importer):
         stage = hou.node('/stage')
         assert isinstance(stage, hou.LopNode)
 
-        current_node = utils.get_current_node()
+        current_node = common.get_current_node()
         if current_node and current_node.type().name() == 'materiallibrary':
             parent = current_node
         elif lib := stage.node(self.default_library_name):
@@ -32,10 +31,11 @@ class SurfaceImporter(base.Importer):
             parent = lib
         assert isinstance(parent, hou.LopNode)
 
-        material = common.get_material(data)
+        localize = data['localize']
+        material = common.get_material(data, localize=localize)
         material_node = builder.create_material(material=material, parent=parent)
 
         # Layout
-        utils.layout_nodes([material_node])
+        common.layout_nodes([material_node])
 
         logger.info('Successfully created Surface.')

@@ -1,31 +1,21 @@
-import dataclasses
 import json
 import logging
-from collections.abc import Sequence
-from enum import StrEnum
-from typing import Any
+
+import hou
+from component_builder import ArnoldComponentBuilder, ComponentBuilder
+
+from ..importers import Importer
+from ..importers.asset3d import AssetImporter
+from ..importers.surface import SurfaceImporter
+from .base import ImportManager, Options, Renderer
 
 logger = logging.getLogger(__name__)
 
 
-class Renderer(StrEnum):
-    ARNOLD = 'Arnold'
+class BuilderImportManager(ImportManager):
+    """An implementation of the ImportManager that uses ComponentBuilders on import."""
 
-
-@dataclasses.dataclass
-class Options:
-    renderer: Renderer = Renderer.ARNOLD
-    triplanar: bool = False
-
-
-class ImportManager:
     def __init__(self) -> None:
-        # Delayed import to keep GUI decoupled
-        from component_builder import ArnoldComponentBuilder, ComponentBuilder
-
-        from .base import Importer
-        from .importers import AssetImporter, SurfaceImporter
-
         self.builders: dict[str, ComponentBuilder] = {
             Renderer.ARNOLD: ArnoldComponentBuilder()
         }
@@ -35,12 +25,12 @@ class ImportManager:
             'surface': SurfaceImporter(),
         }
 
-    def handle_data(self, data: Any) -> None:
-        if not isinstance(data, Sequence):
-            data = (data,)
+    def handle_data(self, data: list | dict, options: Options) -> None:
+        """Handle the data with the options."""
 
-        for d in data:
-            self.import_data(d)
+        data_list = data if isinstance(data, list) else [data]
+        for d in data_list:
+            self.import_data(d, options)
 
     def import_data(self, data: dict, options: Options) -> None:
         """Import the data using one of the available Importers."""
@@ -59,6 +49,12 @@ class ImportManager:
             logger.error(f'The renderer {options.renderer.value} is not supported.')
             return
 
+        localize = options.localize
+        if localize and hou.hipFile.isNewFile():
+            logger.warning('File is not saved. Skipping localizing files.')
+            localize = False
+
         data['triplanar'] = options.triplanar
+        data['localize'] = localize
 
         importer.import_data(data, builder)

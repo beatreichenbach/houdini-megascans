@@ -3,8 +3,7 @@ import logging
 import hou
 from component_builder import Component, ComponentBuilder
 
-from .. import base
-from . import common
+from . import base, common
 
 logger = logging.getLogger(__name__)
 
@@ -23,8 +22,10 @@ class AssetImporter(base.Importer):
         # Custom Data
         tags = data['tags']
 
-        geometry = common.get_geometry(data)
-        material = common.get_material(data)
+        localize = data['localize']
+
+        geometry = common.get_geometry(data, localize=localize)
+        material = common.get_material(data, localize=localize)
         component = Component(
             name=name,
             geometry=geometry,

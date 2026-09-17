@@ -1,4 +1,3 @@
-from .asset3d import AssetImporter
-from .surface import SurfaceImporter
+from .base import Importer
 
-__all__ = ['AssetImporter', 'SurfaceImporter']
+__all__ = ['Importer']
