@@ -7,10 +7,9 @@ try:
 except ImportError:
     from PySide2 import QtGui, QtWidgets
 
-from qt_material_icons import MaterialIcon
-
 from .json_socket import JSONTCPServer
 from .managers import ImportManager, Options, Renderer
+from .qt_material_icons import MaterialIcon
 
 logger = logging.getLogger(__name__)
 
