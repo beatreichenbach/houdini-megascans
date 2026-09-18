@@ -11,7 +11,7 @@ automatically imports them as Components into Solaris.
 
 Megascans is installed as a Houdini Package.
 
-1. Go to the [Releases](https://github.com/beatreichenbach/houdini-megascans/releases) page and download the latest `megascans.zip`.
+1. Go to the [Releases](https://github.com/beatreichenbach/houdini-megascans/releases) page and download the latest `megascans-{version}.zip`.
 2. Navigate to your Houdini user preferences folder: `$HOME/houdini‹X›.‹Y›`
 3. If you don't have a folder named `packages` in that directory, create it.
 4. Extract the contents of the `.zip` file into the `packages` folder.
@@ -36,11 +36,10 @@ Megascans is installed as a Houdini Package.
 
 ## About this Repository
 
-| Directory | Description                                                                                                              |
-|-----------|--------------------------------------------------------------------------------------------------------------------------|
-| `src/`    | Houdini package definition and plugin files. During the release action they get packaged in the `megascans.zip` archive. |
-| `quixel/` | The source code for the Bridge server and USD import logic.                                                              |
-| `build/`  | Build directory used to generate the release package.                                                                    |
+| Directory    | Description                                                                                                              |
+|--------------|--------------------------------------------------------------------------------------------------------------------------|
+| `src/`       | Houdini package definition and plugin files. During the release action they get packaged in the `megascans.zip` archive. |
+| `megascans/` | The source code for the Bridge server and USD import logic.                                                              |
 
 ### Localize qt-material-icons
 
