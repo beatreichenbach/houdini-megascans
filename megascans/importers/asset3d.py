@@ -13,7 +13,7 @@ class AssetImporter(base.Importer):
         """Import a Megascans 3d Asset into the stage."""
 
         stage = hou.node('/stage')
-        assert isinstance(stage, hou.LopNode)
+        assert isinstance(stage, hou.LopNetwork)
 
         asset_id = data['id']
         clean_name = data['name'].replace(' ', '')

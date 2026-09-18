@@ -1,7 +1,11 @@
 import logging
 
 import hou
-from PySide2 import QtCore
+
+try:
+    from PySide6 import QtCore
+except ImportError:
+    from PySide2 import QtCore
 
 from .dialog import MegascansDialog, logger
 from .managers.builder import BuilderImportManager

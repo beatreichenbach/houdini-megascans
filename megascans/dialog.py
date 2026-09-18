@@ -20,7 +20,7 @@ class MegascansDialog(QtWidgets.QDialog):
     def __init__(
         self,
         import_manager: ImportManager,
-        port: int = 24981,
+        port: int = 13290,
         parent: QtWidgets.QWidget | None = None,
     ) -> None:
         super().__init__(parent)

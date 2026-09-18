@@ -57,9 +57,14 @@ def get_material(data: dict, localize: bool = False) -> Material:
 def get_geometry(data: dict, localize: bool = False) -> Geometry:
     """Return the Geometry options from a data dictionary."""
 
-    path = data['meshList'][0]
-    if localize:
-        path = localize_file(path)
+    mesh_list = data['meshList']
+    if mesh_list:
+        mesh = mesh_list[0]
+        path = mesh['path']
+        if localize:
+            path = localize_file(path)
+    else:
+        path = ''
     geometry = Geometry(path=path, scale=0.01)
     return geometry
 

@@ -18,7 +18,7 @@ class SurfaceImporter(base.Importer):
         """
 
         stage = hou.node('/stage')
-        assert isinstance(stage, hou.LopNode)
+        assert isinstance(stage, hou.LopNetwork)
 
         current_node = common.get_current_node()
         if current_node and current_node.type().name() == 'materiallibrary':
