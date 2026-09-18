@@ -29,10 +29,10 @@ Megascans is installed as a Houdini Package.
 ## Usage
 
 1. In Houdini, open the **Megascans > Bridge**.
-2. In Quixel Bridge, go to **Edit > Settings > DCC Apps** and set the export target to **Houdini** (Custom Socket Export on `localhost:24981`).
+2. In Quixel Bridge, go to **Edit > Settings > DCC Apps** and set the export target to **Houdini** (Houdini Socket Export on `localhost:13290`).
 3. Select an asset in Bridge and choose **Export** — the asset will appear automatically in the Solaris stage.
 
-> **Note:** Bridge must be running on the same machine. The Houdini plugin starts a socket server on port `24981` by default.
+> **Note:** Bridge must be running on the same machine. The Houdini plugin starts a socket server on port `13290` by default.
 
 ## About this Repository
 

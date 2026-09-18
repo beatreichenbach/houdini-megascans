@@ -1,5 +1,3 @@
-import logging
-
 import hou
 
 try:
@@ -7,17 +5,16 @@ try:
 except ImportError:
     from PySide2 import QtCore
 
-from .dialog import MegascansDialog, logger
+from .dialog import MegascansDialog
 from .managers.builder import BuilderImportManager
 
 dialog = None
 
 
-def show_dialog() -> None:
+def show_dialog(port: int = 13290) -> None:
     global dialog
     if dialog is None:
-        logger.setLevel(logging.INFO)
         import_manager = BuilderImportManager()
-        dialog = MegascansDialog(import_manager=import_manager)
+        dialog = MegascansDialog(import_manager=import_manager, port=port)
         dialog.setParent(hou.qt.mainWindow(), QtCore.Qt.WindowType.Tool)
     dialog.show()
