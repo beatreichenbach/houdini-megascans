@@ -30,7 +30,12 @@ class BuilderImportManager(ImportManager):
 
         data_list = data if isinstance(data, list) else [data]
         for d in data_list:
-            self.import_data(d, options)
+            try:
+                with hou.undos.group('Import Asset'):
+                    self.import_data(d, options)
+            except Exception as e:
+                hou.undos.performUndo()
+                logger.error('Failed to import data.', exc_info=e)
 
     def import_data(self, data: dict, options: Options) -> None:
         """Import the data using one of the available Importers."""
