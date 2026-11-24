@@ -3,6 +3,7 @@ import logging
 import hou
 from component_builder import ComponentBuilder
 
+from ..managers.base import Options
 from . import base, common
 
 logger = logging.getLogger(__name__)
@@ -11,7 +12,9 @@ logger = logging.getLogger(__name__)
 class SurfaceImporter(base.Importer):
     default_library_name = 'megascans'
 
-    def import_data(self, data: dict, builder: ComponentBuilder) -> None:
+    def import_data(
+        self, data: dict, builder: ComponentBuilder, options: Options
+    ) -> None:
         """
         Import a Megascans Surface (Material) into the currently selected
         material library or the default one.
@@ -31,8 +34,9 @@ class SurfaceImporter(base.Importer):
             parent = lib
         assert isinstance(parent, hou.LopNode)
 
-        localize = data['localize']
-        material = common.get_material(data, localize=localize)
+        material = common.get_material(
+            data, triplanar=options.triplanar, localize=options.localize
+        )
         material_node = builder.create_material(material=material, parent=parent)
 
         # Layout

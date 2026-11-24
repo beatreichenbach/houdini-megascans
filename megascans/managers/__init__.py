@@ -1,3 +1,3 @@
-from .base import ImportManager, Options, Renderer
+from .base import AssetType, ImportManager, Options, Renderer
 
-__all__ = ['ImportManager', 'Options', 'Renderer']
+__all__ = ['AssetType', 'ImportManager', 'Options', 'Renderer']

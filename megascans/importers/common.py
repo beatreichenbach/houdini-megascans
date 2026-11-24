@@ -6,11 +6,11 @@ import shutil
 from collections.abc import Sequence
 
 import hou
-from component_builder import Geometry, Material
+from component_builder import ComponentType, Geometry, Material, TextureMap
 
 logger = logging.getLogger(__name__)
 
-ComponentType = Material.ComponentType
+MEGASCANS_TO_METERS = 0.01
 
 CHANNELS = {
     'albedo': ComponentType.BASE_COLOR,
@@ -25,14 +25,15 @@ CHANNELS = {
 }
 
 
-def get_material(data: dict, localize: bool = False) -> Material:
+def get_material(
+    data: dict, localize: bool = False, triplanar: bool = False
+) -> Material:
     """Return the Material options from a data dictionary."""
 
     name = data['id']
-    triplanar = data['triplanar']
 
     # Textures
-    textures: dict[ComponentType, Material.TextureMap] = {}
+    textures: dict[ComponentType, TextureMap] = {}
     for component in data['components']:
         path = component['path']
         component_type = component['type']
@@ -45,13 +46,11 @@ def get_material(data: dict, localize: bool = False) -> Material:
         if localize:
             path = localize_file(path)
 
-        texture = Material.TextureMap(path=path)
+        texture = TextureMap(path=path)
         textures[channel] = texture
 
     # Material
-    material = Material(name=name, textures=textures, triplanar=triplanar)
-
-    return material
+    return Material(name=name, textures=textures, triplanar=triplanar)
 
 
 def get_geometry(data: dict, localize: bool = False) -> Geometry:
@@ -65,8 +64,7 @@ def get_geometry(data: dict, localize: bool = False) -> Geometry:
             path = localize_file(path)
     else:
         path = ''
-    geometry = Geometry(path=path, scale=0.01)
-    return geometry
+    return Geometry(path=path, scale=MEGASCANS_TO_METERS)
 
 
 def get_current_node() -> hou.Node | None:
@@ -135,6 +133,4 @@ def localize_file(file: str, destination: str = '$HIP/source') -> str:
 
     # Make relative
     project_dir = os.path.dirname(os.path.normpath(hou.hipFile.path()))
-    path = destination_file.replace(project_dir, '$HIP')
-
-    return path
+    return destination_file.replace(project_dir, '$HIP')

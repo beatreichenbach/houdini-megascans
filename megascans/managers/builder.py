@@ -1,13 +1,18 @@
+import dataclasses
 import json
 import logging
 
 import hou
-from component_builder import ArnoldComponentBuilder, ComponentBuilder
+from component_builder import (
+    ArnoldComponentBuilder,
+    ComponentBuilder,
+    KarmaComponentBuilder,
+)
 
 from ..importers import Importer
 from ..importers.asset3d import AssetImporter
 from ..importers.surface import SurfaceImporter
-from .base import ImportManager, Options, Renderer
+from .base import AssetType, ImportManager, Options, Renderer
 
 logger = logging.getLogger(__name__)
 
@@ -16,13 +21,14 @@ class BuilderImportManager(ImportManager):
     """An implementation of the ImportManager that uses ComponentBuilders on import."""
 
     def __init__(self) -> None:
-        self.builders: dict[str, ComponentBuilder] = {
-            Renderer.ARNOLD: ArnoldComponentBuilder()
+        self.builders: dict[Renderer, ComponentBuilder] = {
+            Renderer.ARNOLD: ArnoldComponentBuilder(),
+            Renderer.KARMA: KarmaComponentBuilder(),
         }
 
-        self.importers: dict[str, Importer] = {
-            '3d': AssetImporter(),
-            'surface': SurfaceImporter(),
+        self.importers: dict[AssetType, Importer] = {
+            AssetType.ASSET_3D: AssetImporter(),
+            AssetType.SURFACE: SurfaceImporter(),
         }
 
     def handle_data(self, data: list | dict, options: Options) -> None:
@@ -41,11 +47,13 @@ class BuilderImportManager(ImportManager):
         """Import the data using one of the available Importers."""
 
         logger.debug(options)
-        logger.debug(json.dumps(data, indent=2))
+        if logger.isEnabledFor(logging.DEBUG):
+            logger.debug(json.dumps(data, indent=2))
 
         data_type = str(data.get('type', ''))
-        importer = self.importers.get(data_type)
-        if importer is None:
+        try:
+            importer = self.importers[AssetType(data_type)]
+        except (KeyError, ValueError):
             logger.error(f'The asset type {data_type!r} is not supported.')
             return
 
@@ -59,7 +67,6 @@ class BuilderImportManager(ImportManager):
             logger.warning('File is not saved. Skipping localizing files.')
             localize = False
 
-        data['triplanar'] = options.triplanar
-        data['localize'] = localize
-
-        importer.import_data(data, builder)
+        importer.import_data(
+            data, builder, dataclasses.replace(options, localize=localize)
+        )

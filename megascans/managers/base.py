@@ -8,6 +8,12 @@ logger = logging.getLogger(__name__)
 
 class Renderer(StrEnum):
     ARNOLD = 'Arnold'
+    KARMA = 'Karma'
+
+
+class AssetType(StrEnum):
+    ASSET_3D = '3d'
+    SURFACE = 'surface'
 
 
 @dataclasses.dataclass
