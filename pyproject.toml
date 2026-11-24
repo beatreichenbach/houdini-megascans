@@ -1,6 +1,6 @@
 [project]
 name = "houdini-megascans"
-version = "0.2.0"
+version = "0.2.1"
 description = "A Quixel Bridge plugin for SideFX Houdini Solaris to import Megascans assets directly into the stage."
 readme = "README.md"
 requires-python = ">=3.11"

@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.2.1 (2026-11-23)
+
+### Bug Fixes
+
+- Bump component-builder to v0.3.1
+  ([`07c7393`](https://github.com/beatreichenbach/houdini-megascans/commit/07c73934dc52b8a5ea653107dad626c58241feff))
+
+
 ## v0.2.0 (2026-11-23)
 
 ### Bug Fixes
