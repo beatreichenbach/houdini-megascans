@@ -28,6 +28,7 @@ include = ["megascans*"]
 [tool.semantic_release]
 version_variables = ["megascans/__init__.py:__version__"]
 version_toml  = ["pyproject.toml:project.version"]
+allow_zero_version = true
 
 [tool.semantic_release.remote]
 ignore_token_for_push = true
