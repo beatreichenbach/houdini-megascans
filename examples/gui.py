@@ -1,22 +1,25 @@
 import logging
 from unittest.mock import Mock
 
-from PySide2 import QtWidgets
+try:
+    from PySide6 import QtWidgets
+except ImportError:
+    from PySide2 import QtWidgets
 
 from megascans.dialog import MegascansDialog
 
 
-def test_gui() -> None:
+def main() -> None:
     app = QtWidgets.QApplication()
 
     import_manager = Mock()
-    import_manager.handle_data.return_value = None
-    import_manager.import_data.return_value = None
     dialog = MegascansDialog(import_manager)
     dialog.show()
-    app.exec_()
+
+    exec_method = getattr(app, 'exec', app.exec_)
+    exec_method()
 
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    test_gui()
+    main()
