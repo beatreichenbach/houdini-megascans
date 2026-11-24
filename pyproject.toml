@@ -35,5 +35,14 @@ ignore_token_for_push = true
 [tool.semantic_release.github]
 upload_to_release = false
 
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+extend-exclude = ["megascans/qt_material_icons"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4", "SIM", "RET", "ARG", "TID", "RUF"]
+ignore = ["TID252"]
+
 [tool.ruff.format]
 quote-style = "single"

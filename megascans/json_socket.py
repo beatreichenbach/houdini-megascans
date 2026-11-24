@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+from contextlib import suppress
 from functools import partial
 
 try:
@@ -40,8 +41,5 @@ class JSONTCPServer(QtNetwork.QTcpServer):
         except json.JSONDecodeError as e:
             logger.error('Failed to decode the data.', exc_info=e)
 
-        try:
+        with suppress(RuntimeError):  # Already garbage collected
             sock.disconnectFromHost()
-        except RuntimeError:
-            # Already garbage collected
-            pass
