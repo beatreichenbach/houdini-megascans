@@ -13,14 +13,14 @@ from .qt_material_icons import MaterialIcon
 
 logger = logging.getLogger(__name__)
 
-dialog = None
+DEFAULT_PORT = 13290
 
 
 class MegascansDialog(QtWidgets.QDialog):
     def __init__(
         self,
         import_manager: ImportManager,
-        port: int = 13290,
+        port: int = DEFAULT_PORT,
         parent: QtWidgets.QWidget | None = None,
     ) -> None:
         super().__init__(parent)
@@ -56,7 +56,8 @@ class MegascansDialog(QtWidgets.QDialog):
         general_group.setLayout(general_layout)
 
         self.renderer_combo = QtWidgets.QComboBox()
-        self.renderer_combo.addItems(list(Renderer))
+        for renderer in Renderer:
+            self.renderer_combo.addItem(renderer.value, userData=renderer)
         general_layout.addRow('Renderer', self.renderer_combo)
 
         self.localize_check = QtWidgets.QCheckBox()
@@ -84,16 +85,19 @@ class MegascansDialog(QtWidgets.QDialog):
 
         self._refresh_status()
 
-    def showEvent(self, event: QtGui.QShowEvent) -> None:
+    def showEvent(self, event: QtGui.QShowEvent) -> None:  # noqa: N802
         super().showEvent(event)
         self.start()
 
-    def closeEvent(self, event: QtGui.QCloseEvent) -> None:
+    def closeEvent(self, event: QtGui.QCloseEvent) -> None:  # noqa: N802
         self.stop()
         super().closeEvent(event)
 
     def start(self) -> None:
         """Start the TCP Server and listen on the port."""
+
+        if self._server.isListening():
+            return
 
         if not self._server.listen(port=self._port):
             logger.error(
@@ -137,7 +141,7 @@ class MegascansDialog(QtWidgets.QDialog):
             self.connect_button.setText('Start Connection')
 
     def _handle_data(self, data: list | dict) -> None:
-        renderer = Renderer(self.renderer_combo.currentText())
+        renderer = self.renderer_combo.currentData()
         options = Options(
             renderer=renderer,
             triplanar=self.triplanar_check.isChecked(),
